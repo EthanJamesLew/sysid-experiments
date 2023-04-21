@@ -88,7 +88,10 @@ class AnnotatedCsvLoader(S3CsvLoader):
             idxs = np.argsort(times)
             states = s_df[self.state_names].to_numpy()
             return atraj.Trajectory(
-                times=times[idxs], states=states[idxs], inputs=None, state_names=self.state_names
+                times=times[idxs],
+                states=states[idxs],
+                inputs=None,
+                state_names=self.state_names,
             )
 
         # group by subject id
