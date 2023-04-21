@@ -23,6 +23,11 @@ class BenchmarkConfiguration(pydantic.BaseModel):
         return v
 
 
+class BenchmarkSchema(pydantic.BaseModel):
+    """list of benchmarks"""
+    benchmarks: List[BenchmarkConfiguration]
+
+
 class PredictionConfiguration(pydantic.BaseModel):
     """model to compare prediction trajectories against a benchmark"""
 
