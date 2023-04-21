@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from sysidexpr.model import BenchmarkConfiguration, PredictionConfiguration, PredictionResult
-from typing import Callable
+from sysidexpr.model import BenchmarkConfiguration, Metric, PredictionConfiguration, PredictionResult
+from typing import Callable, Tuple
 import autokoopman.core.trajectory as atraj
 
 
