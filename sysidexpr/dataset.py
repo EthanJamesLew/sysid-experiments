@@ -81,12 +81,14 @@ class AnnotatedCsvLoader(S3CsvLoader):
 
     def load_trajectories(self) -> Dict[str, atraj.TrajectoriesData]:
         """Load the trajectories from the CSV"""
+        import numpy as np
 
         def extract_time_states(df):
-            times = s_df[self.time_name].to_numpy()
+            times = s_df[self.time_name].to_numpy().flatten()
+            idxs = np.argsort(times)
             states = s_df[self.state_names].to_numpy()
             return atraj.Trajectory(
-                times=times, states=states, inputs=None, state_names=self.state_names
+                times=times[idxs], states=states[idxs], inputs=None, state_names=self.state_names
             )
 
         # group by subject id
@@ -116,7 +118,7 @@ class AnnotatedCsvLoader(S3CsvLoader):
         }
 
 
-class GothPlasmaAnnotated(S3CsvLoader):
+class GothPlasmaAnnotated(AnnotatedCsvLoader):
     """
     Goth Plasma Data
 
@@ -167,7 +169,7 @@ class GothPlasmaRaw(S3CsvLoader):
     object_key = "Data/Plasma data/Raw/Goth_Plasma_WRAP_dem_pacc_082022.csv"
 
 
-class PibImagingAnnotated(S3CsvLoader):
+class PibImagingAnnotated(AnnotatedCsvLoader):
     object_key = "Data/Imaging data/Annotated/pib_roi_annotated.csv"
 
     @property
