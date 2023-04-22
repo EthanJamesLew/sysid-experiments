@@ -62,6 +62,35 @@ class Benchmark:
 
         return {g: atraj.TrajectoriesData(ts) for g, ts in trajectories.items()}
 
+    def store_trajectories(self, pred_trajs, group_name="Test") -> pd.DataFrame:
+        """store the predicted trajectories in a DataFrame"""
+        # create the DataFrame columns
+        columns = [self.config.traj, self.config.time, *self.config.states, group_name]
+
+        # add rows per trajectory id
+        traj_rows = []
+        for tname, traj in pred_trajs._trajs.items():
+            data = np.hstack(
+                (
+                    [
+                        [tname],
+                    ]
+                    * len(traj.times),
+                    np.atleast_2d(traj.times).T,
+                    traj.states,
+                    [
+                        [
+                            True,
+                        ],
+                    ]
+                    * len(traj.times),
+                )
+            )
+            traj_rows.append(data)
+
+        # stack to create a DataFrame
+        return pd.DataFrame(columns=columns, data=np.vstack(traj_rows))
+
     @staticmethod
     def score_benchmark(
         prediction: PredictionConfiguration,
