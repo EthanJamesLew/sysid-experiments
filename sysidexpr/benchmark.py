@@ -23,7 +23,7 @@ def load_benchmark_configs(schema_path: pathlib.Path) -> BenchmarkSchema:
     # open the json and load into the relevant config models
     with open(schema_path, "r") as fp:
       benchmarks_raw = json.load(fp)
-    return parse_obj_as(BenchmarkSchema, benchmarks_raw).benchmarks
+    return parse_obj_as(BenchmarkSchema, benchmarks_raw)
 
 
 class Benchmark:
