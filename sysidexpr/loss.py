@@ -1,7 +1,9 @@
 from typing import Tuple
+
 import autokoopman.core.trajectory as atraj
-from sysidexpr.benchmark import Metric
 import numpy as np
+
+from sysidexpr.benchmark import Metric
 
 
 def penalty_loss(

@@ -1,13 +1,26 @@
-import pandas as pd
-import numpy as np
-from sysidexpr.model import (
-    BenchmarkConfiguration,
-    Metric,
-    PredictionConfiguration,
-    PredictionResult,
-)
-from typing import Callable, Tuple
+import os
+from typing import Callable
+from typing import Tuple
+
 import autokoopman.core.trajectory as atraj
+import numpy as np
+import pandas as pd
+from pydantic import parse_obj_as
+
+from sysidexpr.model import BenchmarkConfiguration
+from sysidexpr.model import BenchmarkSchema
+from sysidexpr.model import Metric
+from sysidexpr.model import PredictionConfiguration
+from sysidexpr.model import PredictionResult
+
+
+def load_benchmark_configs(schema_path: Path) -> BenchmarkSchema:
+    """load the benchmark schema from a json file"""
+    assert os.path.isfile(schema_path)
+    # open the json and load into the relevant config models
+    with open(schema_path, "r") as fp:
+      benchmarks_raw = json.load(fp)
+    benchmarks = parse_obj_as(sidmodel.BenchmarkSchema, benchmarks_raw).benchmarks
 
 
 class Benchmark:

@@ -1,10 +1,11 @@
 """Data Access for S3 Hosted Datasets"""
+import os
+import sys
 from typing import Dict
+
 import boto3
 import botocore
 import pandas as pd
-import sys
-import os
 
 if sys.version_info[0] < 3:
     from StringIO import StringIO  # Python 2.x

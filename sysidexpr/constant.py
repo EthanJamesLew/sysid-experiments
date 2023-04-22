@@ -1,7 +1,8 @@
 """constants for sysidexpr"""
-from sysidexpr.model import BenchmarkConfiguration
-import pathlib
 import os
+import pathlib
+
+from sysidexpr.model import BenchmarkConfiguration
 
 
 # name data base path

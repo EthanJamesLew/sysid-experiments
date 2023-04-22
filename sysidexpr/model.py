@@ -1,8 +1,9 @@
 """Pydantic schema for the sysidexpr model experiments"""
-import pydantic
-import pathlib
 import os
+import pathlib
 from typing import List
+
+import pydantic
 
 
 class BenchmarkConfiguration(pydantic.BaseModel):
