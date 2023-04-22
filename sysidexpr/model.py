@@ -17,12 +17,6 @@ class BenchmarkConfiguration(pydantic.BaseModel):
     time: str
     traj: str
 
-    @pydantic.validator("data_csv", pre=True)
-    def data_csv_exists(cls, v):
-        if not os.path.isfile(v):
-            raise ValueError(f"path {v} is not a file")
-        return v
-
 
 class BenchmarkSchema(pydantic.BaseModel):
     """list of benchmarks"""
@@ -35,12 +29,6 @@ class PredictionConfiguration(pydantic.BaseModel):
     model_name: str
     benchmark: BenchmarkConfiguration
     pred_csv: pathlib.Path
-
-    @pydantic.validator("pred_csv", pre=True)
-    def data_csv_exists(cls, v):
-        if not os.path.isfile(v):
-            raise ValueError(f"path {v} is not a file")
-        return v
 
 
 class Metric(pydantic.BaseModel):
