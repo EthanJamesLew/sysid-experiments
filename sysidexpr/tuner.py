@@ -43,7 +43,7 @@ class HyperparamTuner:
     def tune(self):
         """run the tuner"""
         for hyperparam in self.hyperparameters:
-            (metric, score), hyperparam = self.experiment_runner(hyperparam)
+            (metric, score), hyperparam = self.experiment_runner(self.training_data, self.validation_data, *hyperparam)
             self.metrics.append(metric)
             self.scores.append(score)
             self.hyperparams.append(hyperparam)
