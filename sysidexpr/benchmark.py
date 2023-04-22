@@ -22,7 +22,7 @@ def load_benchmark_configs(schema_path: pathlib.Path) -> BenchmarkSchema:
     assert os.path.isfile(schema_path)
     # open the json and load into the relevant config models
     with open(schema_path, "r") as fp:
-      benchmarks_raw = json.load(fp)
+        benchmarks_raw = json.load(fp)
     return parse_obj_as(BenchmarkSchema, benchmarks_raw)
 
 
@@ -55,9 +55,10 @@ class Benchmark:
         trajectories = {g: {} for g in self.config.groups}
         for groupname in self.config.groups:
             for sid, s_df in subjects_dfs:
-                trajectories[groupname][sid] = extract_time_states(
-                    s_df.loc[s_df[groupname] == True]
-                )
+                # candidate may not be in these groups
+                candidate_df = s_df.loc[s_df[groupname] == True]
+                if len(candidate_df) > 0:
+                    trajectories[groupname][sid] = extract_time_states(candidate_df)
 
         return {g: atraj.TrajectoriesData(ts) for g, ts in trajectories.items()}
 
