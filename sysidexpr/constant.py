@@ -3,6 +3,8 @@
 NOTE: constants are made configurable to allow for easy use between google drive
 and a local machine. This is an unusual design decision, but it is a convenient
 way to allow for easy use of the package.
+
+Maybe in the future, this should be changed to a namespace.
 """
 import os
 import pathlib
@@ -88,10 +90,6 @@ def load_constants_from_json(json_path: pathlib.Path):
     """loads the constants from a json file"""
     config = ConstConfig.parse_file(json_path)
     load_constants(config)
-
-
-# create a list of benchmark configurations
-benchmarks = [plasma_config, imaging_config]
 
 
 # create a list of default prediction configurations
@@ -236,3 +234,7 @@ imaging_config = BenchmarkConfiguration(
     time="pib_age",
     traj="wrapno",
 )
+
+
+# create a list of benchmark configurations
+benchmarks = [plasma_config, imaging_config]
