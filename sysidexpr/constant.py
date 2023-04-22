@@ -1,9 +1,16 @@
-"""constants for sysidexpr"""
+"""constants for sysidexpr
+
+NOTE: constants are made configurable to allow for easy use between google drive
+and a local machine. This is an unusual design decision, but it is a convenient
+way to allow for easy use of the package.
+"""
 import os
 import pathlib
 
-from sysidexpr.model import BenchmarkConfiguration
+import pydantic
+from pydantic import BaseModel
 
+from sysidexpr.model import BenchmarkConfiguration
 
 # name data base path
 data_base_path = pathlib.Path("./drive/Shareddrives/Collaboration with Google/Data")
@@ -32,10 +39,62 @@ def validate_consts():
     ), f"path {scores_base_path} is not a directory"
 
 
-# run it to validate the constants
-validate_consts()
+class ConstConfig(BaseModel):
+    """model to change the package constants
+
+    this is an unusal design decisions, as it will change the global
+    values specified here
+    """
+
+    data_base_path: pathlib.Path = data_base_path
+    predictions_base_path: pathlib.Path = predictions_base_path
+    scores_base_path: pathlib.Path = scores_base_path
+
+    # setup validators
+    @pydantic.validator("data_base_path", pre=True)
+    def data_base_path_exists(cls, v):
+        if not os.path.isdir(v):
+            raise ValueError(f"path {v} is not a directory")
+        return v
+
+    @pydantic.validator("predictions_base_path", pre=True)
+    def predictions_base_path_exists(cls, v):
+        if not os.path.isdir(v):
+            raise ValueError(f"path {v} is not a directory")
+        return v
+
+    @pydantic.validator("scores_base_path", pre=True)
+    def scores_base_path_exists(cls, v):
+        if not os.path.isdir(v):
+            raise ValueError(f"path {v} is not a directory")
+        return v
 
 
+def load_constants(config: ConstConfig):
+    """loads the constants from the config"""
+    global data_base_path
+    global predictions_base_path
+    global scores_base_path
+
+    data_base_path = config.data_base_path
+    predictions_base_path = config.predictions_base_path
+    scores_base_path = config.scores_base_path
+
+    # validate the constants
+    validate_consts()
+
+
+def load_constants_from_json(json_path: pathlib.Path):
+    """loads the constants from a json file"""
+    config = ConstConfig.parse_file(json_path)
+    load_constants(config)
+
+
+# create a list of benchmark configurations
+benchmarks = [plasma_config, imaging_config]
+
+
+# create a list of default prediction configurations
 plasma_config = BenchmarkConfiguration(
     name="plasma",
     data_csv=data_base_path
@@ -177,6 +236,3 @@ imaging_config = BenchmarkConfiguration(
     time="pib_age",
     traj="wrapno",
 )
-
-# create a list of benchmark configurations
-benchmarks = [plasma_config, imaging_config]
