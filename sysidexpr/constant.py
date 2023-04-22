@@ -48,9 +48,9 @@ class ConstConfig(BaseModel):
     values specified here
     """
 
-    data_base_path: pathlib.Path = data_base_path
-    predictions_base_path: pathlib.Path = predictions_base_path
-    scores_base_path: pathlib.Path = scores_base_path
+    data_base_path: pathlib.Path
+    predictions_base_path: pathlib.Path
+    scores_base_path: pathlib.Path
 
     # setup validators
     @pydantic.validator("data_base_path", pre=True)
