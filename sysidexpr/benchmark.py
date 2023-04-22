@@ -1,4 +1,7 @@
+""" benchmarking utilities for sysidexpr """
+import json
 import os
+import pathlib
 from typing import Callable
 from typing import Tuple
 
@@ -14,13 +17,13 @@ from sysidexpr.model import PredictionConfiguration
 from sysidexpr.model import PredictionResult
 
 
-def load_benchmark_configs(schema_path: Path) -> BenchmarkSchema:
+def load_benchmark_configs(schema_path: pathlib.Path) -> BenchmarkSchema:
     """load the benchmark schema from a json file"""
     assert os.path.isfile(schema_path)
     # open the json and load into the relevant config models
     with open(schema_path, "r") as fp:
       benchmarks_raw = json.load(fp)
-    benchmarks = parse_obj_as(sidmodel.BenchmarkSchema, benchmarks_raw).benchmarks
+    return parse_obj_as(BenchmarkSchema, benchmarks_raw).benchmarks
 
 
 class Benchmark:
