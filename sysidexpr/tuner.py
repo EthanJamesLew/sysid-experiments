@@ -18,7 +18,7 @@ class HyperparamTuner:
         self,
         training_data: atraj.TrajectoriesData,
         validation_data: atraj.TrajectoriesData,
-        hyperparameters: Generator[Tuple[Any]],
+        hyperparameters,
         experiment_runner: Callable[[Any], Tuple[Tuple[Metric, float], Dict[str, Any]]],
     ) -> None:
         """hyperparameter tuner for sysidexpr models
