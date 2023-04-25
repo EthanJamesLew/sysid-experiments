@@ -16,6 +16,9 @@ from sysidexpr.model import BenchmarkConfiguration
 
 # name data base path
 data_base_path = pathlib.Path("./drive/Shareddrives/Collaboration with Google/Data")
+scaled_data_base_path = pathlib.Path(
+    "./drive/Shareddrives/Collaboration with Google/ScaledData"
+)
 
 
 # name predictions base path
@@ -98,7 +101,7 @@ imaging_config = None
 benchmarks = None
 
 
-def update_configurations(): 
+def update_configurations():
     global plasma_config
     global imaging_config
     global benchmarks
@@ -106,9 +109,8 @@ def update_configurations():
     # create a list of default prediction configurations
     plasma_config = BenchmarkConfiguration(
         name="plasma",
-        data_csv=data_base_path
-        / "Plasma data"
-        / "Annotated"
+        data_csv=scaled_data_base_path
+        / "plasma"
         / "Goth_Plasma_WRAP_dem_pacc_082022_annotated.csv",
         prediction_dir=predictions_base_path / "Plasma data",
         states=["ABeta_1_40", "ABeta_1_42", "pTau231", "pTau181", "GFAP", "NFL"],
@@ -117,10 +119,9 @@ def update_configurations():
         traj="WRAPNo",
     )
 
-
     imaging_config = BenchmarkConfiguration(
         name="imaging",
-        data_csv=data_base_path / "Imaging data" / "Annotated" / "pib_roi_annotated.csv",
+        data_csv=scaled_data_base_path / "imaging" / "pib_roi_annotated.csv",
         prediction_dir=predictions_base_path / "Imaging data",
         states=[
             "dvr_precentral_l",
@@ -245,7 +246,6 @@ def update_configurations():
         time="pib_age",
         traj="wrapno",
     )
-
 
     # create a list of benchmark configurations
     benchmarks = [plasma_config, imaging_config]
