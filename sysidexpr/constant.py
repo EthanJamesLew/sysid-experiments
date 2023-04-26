@@ -98,6 +98,7 @@ def load_constants_from_json(json_path: pathlib.Path):
 
 plasma_config = None
 imaging_config = None
+cmu_config = None
 benchmarks = None
 
 
@@ -117,6 +118,18 @@ def update_configurations():
         groups=["IsBaseline", "Train", "Validate", "Test"],
         time="AgeAtVisit",
         traj="WRAPNo",
+    )
+
+    cmu_config = BenchmarkConfiguration(
+        name="cmu",
+        data_csv=scaled_data_base_path
+        / "CMU Walking data"
+        / "CMU_walking_annotated_data.csv",
+        prediction_dir=predictions_base_path / "CMU Walking data",
+        states=[f"X{idx}" for idx in range(1, 51)],
+        groups=["Train", "Validate", "Test"],
+        time="t",
+        traj="id",
     )
 
     imaging_config = BenchmarkConfiguration(
@@ -248,7 +261,7 @@ def update_configurations():
     )
 
     # create a list of benchmark configurations
-    benchmarks = [plasma_config, imaging_config]
+    benchmarks = [plasma_config, cmu_config, imaging_config]
 
 
 # default
