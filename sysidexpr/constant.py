@@ -116,7 +116,7 @@ def update_configurations():
     plasma_config = BenchmarkConfiguration(
         name="plasma",
         data_csv=data_base_path
-        / "plasma"
+        / "Plasma data"
         / "Annotated"
         / "Goth_Plasma_WRAP_dem_pacc_082022_annotated.csv",
         prediction_dir=predictions_base_path / "Plasma data",
@@ -164,7 +164,7 @@ def update_configurations():
 
     imaging_config = BenchmarkConfiguration(
         name="imaging",
-        data_csv=data_base_path / "imaging" / "Annotated" / "pib_roi_annotated.csv",
+        data_csv=data_base_path / "Imaging data" / "Annotated" / "pib_roi_annotated.csv",
         prediction_dir=predictions_base_path / "Imaging data",
         states=[
             "dvr_precentral_l",
