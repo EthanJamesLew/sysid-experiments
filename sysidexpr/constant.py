@@ -99,12 +99,17 @@ def load_constants_from_json(json_path: pathlib.Path):
 plasma_config = None
 imaging_config = None
 cmu_config = None
+fhn_config = None
+lorenz_config = None
 benchmarks = None
 
 
 def update_configurations():
     global plasma_config
     global imaging_config
+    global cmu_config
+    global fhn_config
+    global lorenz_config
     global benchmarks
 
     # create a list of default prediction configurations
@@ -124,9 +129,33 @@ def update_configurations():
         name="cmu",
         data_csv=scaled_data_base_path
         / "CMU Walking data"
-        / "CMU_walking_annotated_data.csv",
+        / "Annotated"
+        / "CMU_data_1.csv",
         prediction_dir=predictions_base_path / "CMU Walking data",
         states=[f"X{idx}" for idx in range(1, 51)],
+        groups=["Train", "Validate", "Test"],
+        time="t",
+        traj="id",
+    )
+
+    fhn_config = BenchmarkConfiguration(
+        name="fhn",
+        data_csv=scaled_data_base_path / "FHN data" / "Annotated" / "FHN_data_1.csv",
+        prediction_dir=predictions_base_path / "FHN data",
+        states=[f"X{idx}" for idx in range(1, 3)],
+        groups=["Train", "Validate", "Test"],
+        time="t",
+        traj="id",
+    )
+
+    lorenz_config = BenchmarkConfiguration(
+        name="lorenz",
+        data_csv=scaled_data_base_path
+        / "Lorenz data"
+        / "Annotated"
+        / "Lorenz_data_1.csv",
+        prediction_dir=predictions_base_path / "Lorenz data",
+        states=[f"X{idx}" for idx in range(1, 4)],
         groups=["Train", "Validate", "Test"],
         time="t",
         traj="id",
@@ -261,7 +290,7 @@ def update_configurations():
     )
 
     # create a list of benchmark configurations
-    benchmarks = [plasma_config, cmu_config, imaging_config]
+    benchmarks = [fhn_config, plasma_config, lorenz_config, cmu_config, imaging_config]
 
 
 # default
