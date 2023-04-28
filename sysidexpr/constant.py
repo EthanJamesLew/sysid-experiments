@@ -161,7 +161,7 @@ def update_configurations():
         traj="id",
     )
 
-    imaging_config = Benchmar_kConfiguration(
+    imaging_config = BenchmarkConfiguration(
         name="imaging",
         data_csv=data_base_path / "imaging" / "pib_roi_annotated.csv",
         prediction_dir=predictions_base_path / "Imaging data",
