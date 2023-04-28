@@ -115,7 +115,7 @@ def update_configurations():
     # create a list of default prediction configurations
     plasma_config = BenchmarkConfiguration(
         name="plasma",
-        data_csv=scaled_data_base_path
+        data_csv=data_base_path
         / "plasma"
         / "Goth_Plasma_WRAP_dem_pacc_082022_annotated.csv",
         prediction_dir=predictions_base_path / "Plasma data",
@@ -127,7 +127,7 @@ def update_configurations():
 
     cmu_config = BenchmarkConfiguration(
         name="cmu",
-        data_csv=scaled_data_base_path
+        data_csv=data_base_path
         / "CMU Walking data"
         / "Annotated"
         / "CMU_data_1.csv",
@@ -140,7 +140,7 @@ def update_configurations():
 
     fhn_config = BenchmarkConfiguration(
         name="fhn",
-        data_csv=scaled_data_base_path / "FHN data" / "Annotated" / "FHN_data_1.csv",
+        data_csv=data_base_path / "FHN data" / "Annotated" / "FHN_data_1.csv",
         prediction_dir=predictions_base_path / "FHN data",
         states=[f"X{idx}" for idx in range(1, 3)],
         groups=["Train", "Validate", "Test"],
@@ -150,7 +150,7 @@ def update_configurations():
 
     lorenz_config = BenchmarkConfiguration(
         name="lorenz",
-        data_csv=scaled_data_base_path
+        data_csv=data_base_path
         / "Lorenz data"
         / "Annotated"
         / "Lorenz_data_1.csv",
@@ -161,9 +161,9 @@ def update_configurations():
         traj="id",
     )
 
-    imaging_config = BenchmarkConfiguration(
+    imaging_config = Benchmar_kConfiguration(
         name="imaging",
-        data_csv=scaled_data_base_path / "imaging" / "pib_roi_annotated.csv",
+        data_csv=data_base_path / "imaging" / "pib_roi_annotated.csv",
         prediction_dir=predictions_base_path / "Imaging data",
         states=[
             "dvr_precentral_l",
