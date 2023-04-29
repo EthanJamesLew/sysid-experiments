@@ -26,10 +26,11 @@ def _integration_loss(
         idxs = np.logical_not(np.isnan(y_diffs.flatten()))
 
         # slice idxs over a fixed time horizon
-        if n is not None:
-            idxs = idxs[:n]
+        if n is None:
+            traj_total = np.sum(dts[idxs] * y_diffs[idxs])
+        else:
+            traj_total = np.sum(dts[:n][idxs[:n]] * y_diffs[:n][idxs[:n]])
 
-        traj_total = np.sum(dts[idxs] * y_diffs[idxs])
         totals.append(traj_total)
 
         # warn if there are NaNs in the trajectory
