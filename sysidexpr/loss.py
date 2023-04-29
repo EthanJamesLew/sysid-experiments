@@ -21,9 +21,14 @@ def penalty_loss(
         # dealing with NaNs in eval is dangerous as predictor with
         # a lot of NaNs will score well
         dts = np.diff(t.times)
-        y_diffs = t.states[:-1] ** 2.0
+        y_diffs = t.states[1:] ** 2.0
         idxs = np.logical_not(np.isnan(y_diffs.flatten()))
         traj_total = np.sum(dts[idxs] * y_diffs[idxs])
         totals.append(traj_total)
+
+        # warn if there are NaNs in the trajectory
+        if np.any(np.isnan(totals)):
+            # print a warning
+            print("WARNING: NaNs in penalty loss")
 
     return Metric(name="penalty_loss", lower_better=True), np.sqrt(np.sum(totals))
