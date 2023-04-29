@@ -46,10 +46,17 @@ def _integration_loss(
     return Metric(name=metric_name, lower_better=True), np.sqrt(np.sum(totals))
 
 
+def integration_loss_1(
+    data: atraj.TrajectoriesData, pred: atraj.TrajectoriesData
+) -> Tuple[Metric, float]:
+    """Compute the integration loss over a 1 samples horizon"""
+    return _integration_loss(data, pred, n=1)
+
+
 def integration_loss_5(
     data: atraj.TrajectoriesData, pred: atraj.TrajectoriesData
 ) -> Tuple[Metric, float]:
-    """Compute the integration loss over a 10 samples horizon"""
+    """Compute the integration loss over a 5 samples horizon"""
     return _integration_loss(data, pred, n=5)
 
 
