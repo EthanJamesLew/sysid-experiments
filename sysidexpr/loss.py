@@ -37,7 +37,12 @@ def _integration_loss(
             # print a warning
             print("WARNING: NaNs in penalty loss")
 
-    return Metric(name="penalty_loss", lower_better=True), np.sqrt(np.sum(totals))
+    # build the metric name
+    metric_name = "integration_loss"
+    if n is not None:
+        metric_name += f"_{n}"
+
+    return Metric(name=metric_name, lower_better=True), np.sqrt(np.sum(totals))
 
 
 def integration_loss_5(
