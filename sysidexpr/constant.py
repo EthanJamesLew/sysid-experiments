@@ -160,8 +160,8 @@ def update_configurations():
         lorenz96_configs.append(
             BenchmarkConfiguration(
                 name=f"lorenz96_{n}",
-                data_csv=data_base_path
-                / f"Lorenz96-{n}"
+                data_csv=scaled_data_base_path
+                / f"lorenz96_{n}"
                 / f"lorenz96_{n}_annotated.csv",
                 prediction_dir=predictions_base_path / f"Lorenz96-{n}",
                 states=[f"X{idx}" for idx in range(1, n + 1)],
