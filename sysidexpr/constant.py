@@ -127,9 +127,7 @@ def update_configurations():
 
     cmu_config = BenchmarkConfiguration(
         name="cmu",
-        data_csv=scaled_data_base_path
-        / "cmu"
-        / "CMU_data_1.csv",
+        data_csv=scaled_data_base_path / "cmu" / "CMU_data_1.csv",
         prediction_dir=predictions_base_path / "CMU Walking data",
         states=[f"X{idx}" for idx in range(1, 51)],
         groups=["Train", "Validate", "Test"],
@@ -149,15 +147,29 @@ def update_configurations():
 
     lorenz_config = BenchmarkConfiguration(
         name="lorenz",
-        data_csv=scaled_data_base_path
-        / "lorenz"
-        / "Lorenz_data_1.csv",
+        data_csv=scaled_data_base_path / "lorenz" / "Lorenz_data_1.csv",
         prediction_dir=predictions_base_path / "Lorenz data",
         states=[f"X{idx}" for idx in range(1, 4)],
         groups=["Train", "Validate", "Test"],
         time="t",
         traj="id",
     )
+
+    lorenz96_configs = []
+    for n in {16, 32, 128}:
+        lorenz96_configs.append(
+            BenchmarkConfiguration(
+                name=f"lorenz96_{n}",
+                data_csv=data_base_path
+                / f"Lorenz96-{n}"
+                / f"lorenz96_{n}_annotated.csv",
+                prediction_dir=predictions_base_path / f"Lorenz96-{n}",
+                states=[f"X{idx}" for idx in range(1, n + 1)],
+                groups=["Train", "Validate", "Test"],
+                time="time",
+                traj="id",
+            )
+        )
 
     imaging_config = BenchmarkConfiguration(
         name="imaging",
@@ -288,7 +300,14 @@ def update_configurations():
     )
 
     # create a list of benchmark configurations
-    benchmarks = [fhn_config, plasma_config, lorenz_config, cmu_config, imaging_config]
+    benchmarks = [
+        fhn_config,
+        *lorenz96_configs,
+        plasma_config,
+        lorenz_config,
+        cmu_config,
+        imaging_config,
+    ]
 
 
 # default
