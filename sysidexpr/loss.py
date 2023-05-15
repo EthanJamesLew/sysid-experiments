@@ -27,9 +27,9 @@ def _integration_loss(
 
         # slice idxs over a fixed time horizon
         if n is None:
-            traj_total = np.sum(dts[idxs] * y_diffs[idxs])
+            traj_total = np.sum(dts[idxs] * y_diffs[idxs].flatten())
         else:
-            traj_total = np.sum(dts[:n][idxs[:n]] * y_diffs[:n][idxs[:n]])
+            traj_total = np.sum(dts[:n][idxs[:n]] * y_diffs[:n][idxs[:n]].flatten())
 
         totals.append(traj_total)
 
